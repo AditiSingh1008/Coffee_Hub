@@ -162,7 +162,7 @@ const Hero = () => {
         style={{ zIndex: 5 }}
       >
         <motion.img
-          src="/src/assets/coffee.jpg"
+          src="/images/coffee.jpg"
           alt="Coffee Cup"
           className="floating-coffee-image"
           animate={{ y: [20, -20, 20], scale: [0.9, 1.1, 0.9] }}
