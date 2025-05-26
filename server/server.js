@@ -20,6 +20,7 @@ console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? '*****' : null);
 
 // CORS configuration
 const allowedOrigins = [
+  /^https?:\/\/localhost:\d+$/,
   "https://coffee-hub-kappa.vercel.app",
   'http://localhost:3000',
   'http://localhost:5174',
