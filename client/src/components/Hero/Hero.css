@@ -1,0 +1,189 @@
+/* Hero.css */
+
+/* Text shadow for hero heading */
+.hero-text-shadow {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Base styles for description paragraph with typewriter animation */
+.hero-paragraph {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid rgba(234, 179, 8, 0.9);
+  width: 0;
+  animation: typing 3s steps(40, end) forwards, blinkCaret 0.75s step-end infinite;
+  color: #eae1b8;
+  font-weight: 500;
+  user-select: none;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Typing effect keyframes */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Caret blinking effect */
+@keyframes blinkCaret {
+  0%, 100% {
+    border-color: rgba(234, 179, 8, 0.9);
+  }
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* Glow effect on coffee image container */
+.floating-coffee-image-container {
+  position: relative;
+  width: 450px;
+  height: auto;
+  z-index: 5; /* behind text */
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Glow halo behind coffee image */
+.floating-coffee-image-container::before {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(250,210,100,0.5) 0%, transparent 80%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(40px);
+  z-index: -1;
+  border-radius: 50%;
+}
+
+/* Coffee image styling */
+.floating-coffee-image {
+  width: 450px;
+  height: auto;
+  border-radius: 9999px;
+  object-fit: cover;
+  position: absolute;
+  right: 12rem;   /* moved more left */
+  bottom: -12rem; /* moved further down */
+  cursor: default;
+  user-select: none;
+  filter:
+    drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 20px rgba(250, 210, 100, 0.8));
+  opacity: 0.9;
+  display: block !important;
+  transition: transform 0.5s ease;
+  pointer-events: auto;
+}
+
+/* Glow effect on audio play/pause button */
+.motion-button-glow {
+  box-shadow:
+    0 0 10px rgba(234, 179, 8, 0.8),
+    0 0 20px rgba(234, 179, 8, 0.6),
+    0 0 30px rgba(234, 179, 8, 0.4);
+  transition: box-shadow 0.3s ease;
+}
+
+.motion-button-glow:hover {
+  box-shadow:
+    0 0 20px rgba(234, 179, 8, 1),
+    0 0 40px rgba(234, 179, 8, 0.8),
+    0 0 60px rgba(234, 179, 8, 0.6);
+}
+
+/* Responsive Text Sizes */
+@media (max-width: 639px) {
+  .hero-heading {
+    font-size: 1.8rem;
+  }
+  .hero-paragraph {
+    font-size: 0.875rem !important;
+    white-space: normal;
+    border-right: none;
+    animation: none;
+    width: auto !important;
+    overflow: visible !important;
+  }
+  .hero-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  .floating-coffee-image-container {
+    width: 160px !important;
+    right: 1.5rem !important;
+    bottom: 4rem !important;
+  }
+  .floating-coffee-image {
+    width: 160px !important;
+    right: 1.5rem !important;
+    bottom: 4rem !important;
+    filter:
+      drop-shadow(0 0 6px rgba(250, 210, 100, 0.7));
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .hero-heading {
+    font-size: 2.5rem;
+  }
+  .hero-paragraph {
+    font-size: 1.1rem;
+    padding: 0 2rem;
+  }
+  .hero-button {
+    padding: 1rem 2.5rem;
+    font-size: 1.25rem;
+  }
+  .floating-coffee-image-container {
+    width: 260px !important;
+    right: 2rem !important;
+    bottom: 3rem !important;
+  }
+  .floating-coffee-image {
+    width: 260px !important;
+    right: 2rem !important;
+    bottom: 3rem !important;
+    filter:
+      drop-shadow(0 0 12px rgba(250, 210, 100, 0.75));
+  }
+}
+
+/* Other styling */
+.scroll-indicator {
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-container {
+  margin-top: -3rem;
+  max-width: 90vw;
+}
+
+/* Button hover glow override for hero button */
+.hero-button:hover {
+  box-shadow: 0 0 18px rgba(234, 179, 8, 0.9);
+  background-color: #facc15;
+  transition: all 0.3s ease;
+}
+
+/* Add glow to audio button */
+.motion-button-glow {
+  /* Already defined above */
+}
+
+/* Optional: improve responsiveness for hero section's padding and layout */
+@media (max-width: 639px) {
+  .relative.z-20.flex.flex-col.items-start.justify-center.max-w-xl.space-y-6.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

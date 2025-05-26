@@ -1,0 +1,11 @@
+.glow-gradient-text {
+  background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ade80);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 8px rgba(255, 110, 196, 0.7), 0 0 12px rgba(120, 115, 245, 0.7), 0 0 16px rgba(74, 222, 128, 0.7);
+  transition: text-shadow 0.3s ease;
+}
+
+.glow-gradient-text:hover {
+  text-shadow: 0 0 12px rgba(255, 110, 196, 1), 0 0 18px rgba(120, 115, 245, 1), 0 0 24px rgba(74, 222, 128, 1);
+}
