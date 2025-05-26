@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NavigationArrow from "../NavigationArrows/NavigationArrow";
+import { submitContactForm } from "../../api";
+
+import PropTypes from "prop-types";
 
 
 const envelopeVariants = {
@@ -19,7 +22,7 @@ const cardVariants = {
   back: { rotateY: 180, transition: { duration: 0.6 } },
 };
 
-import PropTypes from "prop-types";
+
 
 const EnvelopeSVG = ({ flapOpen }) => (
   <motion.svg
@@ -177,48 +180,61 @@ const Contact = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus(null);
-    setLoading(true);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setStatus(null);
+  setLoading(true);
 
-    try {
-      const response = await fetch("http://localhost:5000/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
-      });
+  // ✅ Frontend validation
+  if (!name.trim() || !email.trim() || !message.trim()) {
+    setStatus({ type: "error", message: "All fields are required." });
+    setLoading(false);
+    return;
+  }
 
-      const data = await response.json();
+  // ✅ Debug: log data before sending
+  console.log("Submitting contact form with:", { name, email, message });
 
-      if (data.success) {
-        setStatus({ type: "success", message: "Message sent successfully!" });
-        setName("");
-        setEmail("");
-        setMessage("");
-        setFormFlying(true);
+  try {
+    // ✅ Send contact form data to backend
+    const response = await submitContactForm({ name, email, message });
+
+    if (response.success) {
+      setStatus({ type: "success", message: "Message sent successfully!" });
+      setName("");
+      setEmail("");
+      setMessage("");
+      setFormFlying(true);
+
+      // ✅ Animate form closing and reopening
+      setTimeout(() => {
+        setFormFlying(false);
+        setFormVisible(false);
+        setFlapOpen(false);
 
         setTimeout(() => {
-          setFormFlying(false);
-          setFormVisible(false);
-          setFlapOpen(false);
-
-          setTimeout(() => {
-            setFormVisible(true);
-            setFlapOpen(true);
-            setStatus(null);
-          }, 1200);
-        }, 1000);
-      } else {
-        setStatus({ type: "error", message: "Failed to send message. Please try again." });
-      }
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setStatus({ type: "error", message: "Failed to send message. Please try again." });
-    } finally {
-      setLoading(false);
+          setFormVisible(true);
+          setFlapOpen(true);
+          setStatus(null);
+        }, 1200);
+      }, 1000);
+    } else {
+      // ✅ Show backend error if available
+      setStatus({
+        type: "error",
+        message: response.error || "Failed to send message. Please try again.",
+      });
     }
-  };
+  } catch (error) {
+    console.error("Error sending message:", error);
+    setStatus({ type: "error", message: "Something went wrong. Please try again." });
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+ 
 
   return (
     <section className="relative flex flex-col justify-center items-center p-6 text-white min-h-screen overflow-hidden">

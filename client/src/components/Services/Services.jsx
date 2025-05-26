@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
 import NavigationArrow from "../NavigationArrows/NavigationArrow";
+import { createCheckoutSession } from "../../api";
+
+
+
 
 import cappuccinoImage from "../../assets/cappuccino.jpg";
 import blackCoffeeImage from "../../assets/black-coffee.jpg";
@@ -94,34 +98,22 @@ const Services = () => {
   };
 
   const handleCheckout = async (product) => {
-    console.log("Sending product to backend:", product);
-    try {
-      const res = await fetch("http://localhost:5000/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ product }),
-      });
+  console.log("Sending product to backend:", product);
+  try {
+    const data = await createCheckoutSession(product);
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        alert(`Checkout session error: ${errorData.error || "Unknown error"}`);
-        console.error("Checkout session error:", errorData);
-        return;
-      }
-
-      const data = await res.json();
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert("Checkout session failed to create.");
-        console.error("No checkout URL returned:", data);
-      }
-    } catch (error) {
-      console.error("Checkout error:", error);
-      alert("Something went wrong with checkout.");
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert("Checkout session failed to create.");
+      console.error("No checkout URL returned:", data);
     }
-  };
+  } catch (error) {
+    console.error("Checkout error:", error);
+    alert("Something went wrong with checkout.");
+  }
+};
+
 
   return (
     <motion.section
